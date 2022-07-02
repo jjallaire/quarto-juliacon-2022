@@ -193,10 +193,19 @@ Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
 ::: columns
 
 ::: {.column width="47%"}
--   Arbitrary layout of figures and tables
--   Also works for code chunks that produce figures and tables: <https://quarto.org/docs/authoring/figures-and-layout.html#figures>
--   Shorthand syntax (`layout-ncol` or `layout-nrow`) available for simple cases.
-    
+
+-   Arbitrary layout of figures and tables:
+
+    ```{.markdown}
+    ::: {layout="[[40,-20,40], [100]]"}
+    ![Surus](surus.png)
+    ![Hanno](hanno.png)
+    ![Lin Wang](lin-wang.png)
+    :::
+    ```
+
+-   Shorthand syntax (`layout-ncol` or `layout-nrow`) available for simple cases:
+
     ````markdown
     ::: {layout-ncol="2"}
     Block 1
@@ -205,20 +214,15 @@ Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
     :::
     ````
 
--   Can target arbitrary content including equations, bullet lists, etc.
+-   Also works for code chunks that produce figures and tables: <https://quarto.org/docs/authoring/figures-and-layout.html#figures>
+
 :::
 
 ::: {.column width="5%"}
 :::
 
 ::: {.column width="48%"}
-``` markdown
-::: {layout="[[40,-20,40], [100]]"}
-![Surus](surus.png)
-![Hanno](hanno.png)
-![Lin Wang](lin-wang.png)
-:::
-```
+
 
 ![](images/layout-attrib-negative.png)
 :::
