@@ -5,23 +5,25 @@ author: J.J. Allaire
 date: July 29th, 2022
 format: 
   revealjs:
+    preview-links: true
     footer: https://quarto.org
+    css: styles.css
+bibliography: references.bib
 ---
 
 # Overview
 
-- Quarto Basics
+-   Quarto Basics
 
-- Scientific Markdown
+-   Scientific Markdown
 
-- Output Formats
+-   Output Formats
 
-- Quarto and Julia
+-   Quarto and Julia
 
-- Under the Hood
+-   Under the Hood
 
-- Julia Computations
-
+-   Julia Computations
 
 # Quarto Basics
 
@@ -31,9 +33,9 @@ format:
 
 Quarto is an open-source scientific and technical publishing system that builds on standard markdown with features essential for scientific communication.
 
-- Computations: Python, R, Julia, Observable JS
-- Markdown: Pandoc w/ many enhancements
-- Output: Documents, presentations, websites, books, blogs
+-   Computations: Python, R, Julia, Observable JS
+-   Markdown: [Pandoc](https://pandoc.org) w/ many enhancements
+-   Output: Documents, presentations, websites, books, blogs
 
 ## Goal: Computational Documents
 
@@ -53,20 +55,17 @@ Quarto is an open-source scientific and technical publishing system that builds 
 
 ![](images/scientific-markdown.png)
 
-
 ## Goal: Single Source Publishing
 
 <https://coko.foundation/articles/single-source-publishing.html>
 
-
 ![](images/single-source-publishing.jpg)
-
 
 ## Simple Example {.smaller}
 
 Markdown document with cross references and executable code blocks:
 
-````markdown
+```` markdown
 ---
 title: "Plots Demo"
 author: "Norah Jones"
@@ -90,58 +89,247 @@ plot(sin, x->sin(2x), 0, 2π, leg=false, fill=(0,:lavender))
 
 Can be rendered to dozens of output formats (via Pandoc):
 
-```bash
+``` bash
 quarto render hello.qmd --to html
 quarto render hello.qmd --to pdf
 quarto render hello.qmd --to docx
+quarto render hello.qmd --to pptx
 ```
 
+## Rendered Output
 
+::: {layout-ncol="2"}
+#### HTML
 
-## Code Cells
+![](images/hello-html.png){.border}
 
+#### PDF
 
+![](images/hello-pdf.png){.border}
+:::
 
-## More Examples
+## Rendered Output
 
-https://juliamixedmodels.github.io/EmbraceUncertainty
+::: {layout-ncol="2"}
+#### MS Word
 
+![](images/hello-docx.png){.border}
 
+#### PowerPoint
+
+![](images/hello-pptx.png){.border}
+:::
+
+## Code Cells {.smaller}
+
+Special syntax indicates that a code block is *executable*:
+
+```` markdown
+```{{julia}}
+#| echo: false
+
+using Plots
+plot(sin, x->sin(2x), 0, 2π, leg=false, fill=(0,:lavender))
+```
+````
+
+Code is executed and its output is included in the document.
+
+Some useful options for code cells:
+
+| Option      | Description                               |
+|-------------|-------------------------------------------|
+| `echo`      | Control whether source code is displayed. |
+| `output`    | Control whether output is displayed.      |
+| `warning`   | Control whether warnings are displayed.   |
+| `code-fold` | Fold code using HTML `<details>` tag.     |
+| `layout`    | Layout multiple plots side by side.       |
 
 
 # Markdown Enhancements
 
-## Citations
+## Citations {.smaller}
 
-## Cross References
+Pandoc includes robust support for citations and bibliographies in a wide variety of formats including [BibTeX](http://www.bibtex.org/), [CSL](https://citationstyles.org/), and [RIS](https://en.wikipedia.org/wiki/RIS_(file_format)).
+
++-------------------------------------------+---------------------------------------------------------------------+
+| Markdown Syntax                           | Output                                                              |
++===========================================+=====================================================================+
+|     Blah Blah [see @knuth1984, pp. 33-35; | Blah Blah [see @knuth1984, pp. 33-35; also @wickham2015, chap. 1]   |
+|     also @wickham2015, chap. 1]           |                                                                     |
++-------------------------------------------+---------------------------------------------------------------------+
+|     Blah Blah [@knuth1984, pp. 33-35,     | Blah Blah [@knuth1984, pp. 33-35, 38-39 and passim]                 |
+|     38-39 and passim]                     |                                                                     |
++-------------------------------------------+---------------------------------------------------------------------+
+|     Blah Blah [@wickham2015; @knuth1984]. | Blah Blah [@wickham2015; @knuth1984].                               |
++-------------------------------------------+---------------------------------------------------------------------+
+|     Wickham says blah [-@wickham2015]     | Wickham says blah [-@wickham2015]                                   |
++-------------------------------------------+---------------------------------------------------------------------+
+
+More than [10,000 citation output styles](https://www.zotero.org/styles) supported via CSL (Citation Style Language):
+
+```yaml
+---
+title: "My ARticle"
+bibliography: references.bib
+csl: nature.csl
+---
+```
+
+
+## Cross References {.smaller}
+
+![](images/crossref-subfigures.png){.border width="80%"}
+
+Cross reference figures, tables, equations, sections, theorems, etc.
+
+Markdown: <https://quarto.org/docs/authoring/cross-references.html#subfigures>
+
+Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
+
+
+## Figure/Layout Panels {.smaller}
+
+::: columns
+
+::: {.column width="47%"}
+-   Arbitrary layout of figures and tables
+-   Also works for code chunks that produce figures and tables: <https://quarto.org/docs/authoring/figures-and-layout.html#figures>
+-   Shorthand syntax (`layout-ncol` or `layout-nrow`) available for simple cases.
+    
+    ````markdown
+    ::: {layout-ncol="2"}
+    Block 1
+
+    Block 2
+    :::
+    ````
+
+-   Can target arbitrary content including equations, bullet lists, etc.
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="48%"}
+``` markdown
+::: {layout="[[40,-20,40], [100]]"}
+![Surus](surus.png)
+![Hanno](hanno.png)
+![Lin Wang](lin-wang.png)
+:::
+```
+
+![](images/layout-attrib-negative.png)
+:::
+:::
+
+## Callouts {.smaller}
+
+Work in HTML, PDF, MS Word, Revealjs, and ePub output
+
+![](images/callouts.png){width="90%"}
 
 ## Advanced Page Layout
 
-## Figure/Layout Panels
+Portable markdown syntax for advanced grid/column layout in HTML and PDF
 
-## Callouts
+-   Figures and tables that span the entire page
+-   Use of margin for figures, equations, captions, asides, footnotes, and citations
+-   Responsive show/hide of site navigation and TOC
+
+Docs: <https://quarto.org/docs/authoring/article-layout.html>
 
 ## Diagrams
+
+Quarto has native support for embedding [Mermaid](https://mermaid-js.github.io/mermaid/#/) and [Graphviz](https://graphviz.org/) diagrams. 
+
+```{mermaid}
+%%| echo: fenced
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
 
 
 # Output Formats
 
-## Documents
+## Documents {.smaller}
+
+Pandoc supports a huge array of output formats, all of which can be used with Quarto.
+
+- HTML
+- PDF
+- MS Word
+- Open Office
+- JATS (Journal Article Tag Suite)
+- ConTeXt
+- RTF
+- AsciiDoc
+- Markdown (gfm, hugo, etc.)
+
+Example: [GitHub Langauges Analysis (PDF)](https://github.com/AlissonRP/gh_langs/raw/slides/report.pdf)
 
 ## Presentations
 
+Quarto supports a variety of formats for creating presentations, including:
+
+- revealjs — reveal.js (HTML)
+- pptx — PowerPoint (MS Office)
+- beamer — Beamer (LaTeX/PDF)
+
+Revealjs presentations support many advanced features including speaker notes, animations, custom backgrounds, and printing to PDF.
+
+Example: [JunctionTrees.jl: Efficient Bayesian Inference in Discrete Graphical Models](https://mroavi.github.io/juliacon-2022)
+
 ## Websites
+
+-   Convenient way to publish groups of documents. 
+
+-   Arbitrary content depth / organization
+
+-   Multi-level navigation (navbar / sidebar / hybrid)
+
+-   Full text search (client side or Algolia)
+
+
+Example: [Julia Workshop for Data Science](https://crsl4.github.io/julia-workshop/>)
+
+Example: [Quarto Website](https://quarto.org)
 
 ## Books
 
+-   Inherit features of Quarto websites (navigation, search, etc.)
+
+-   Support cross references across chapters
+
+-   Formats include HTML, PDF, MS Word, and ePub
+
+Example: [Embrace Uncertainty: Mixed-effects models with Julia](https://juliamixedmodels.github.io/EmbraceUncertainty)
+
 ## Blogs
 
-## Markdown (gfm, hugo, etc.)
+-   Inherit features of Quarto websites (navigation, search, etc.)
+
+-   Automatically generated listing and RSS feed
+
+-   Customizable about page
+
+Example: [Patrick Altmeyer's Blog](https://www.paltmeyer.com/blog/)
+
 
 # Quarto and Julia
 
-## IJulia
+## Prerequisites
 
+## IJulia 
+
+## Revise.jl
+
+## Caching and Freeze
 
 ## Tools: VS Code
 
@@ -149,11 +337,11 @@ https://juliamixedmodels.github.io/EmbraceUncertainty
 
 ## Tools: Text Editors
 
-
-
 # Under the Hood
 
-## Pandoc 
+
+
+## Pandoc
 
 ## Pandoc AST
 
@@ -165,27 +353,17 @@ https://juliamixedmodels.github.io/EmbraceUncertainty
 
 ## Julia Filters
 
-
 # Julia Computations
 
 ## Requirements
 
-- Convert arbitrary output (including images) to markdown
-- 
+-   Convert arbitrary output (including images) to markdown
+-   
 
 ## IJulia and Revise.jl
 
-
 ## Other Engines?
 
-- Pluto
-- Neptune
-- Weave.jl
-
-
-
-
-
-
-
-
+-   Pluto
+-   Neptune
+-   Weave.jl

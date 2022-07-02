@@ -2,13 +2,12 @@
 title: "Plots Demo"
 author: "Norah Jones"
 date: "5/22/2021"
-format: html
+format: pptx
+slide-level: 2
 jupyter: julia-1.7
 ---
 
 ## Parametric Plots
-
-Plot function pair (x(u), y(u)). See @fig-parametric for an example.
 
 ```{julia}
 #| label: fig-parametric

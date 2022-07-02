@@ -1,2 +1,7 @@
 *.html
+*.pdf
+*.epub
+*.docx
+*.pptx
 *_files/
+.Rproj.user
