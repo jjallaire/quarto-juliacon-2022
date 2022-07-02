@@ -1,12 +1,11 @@
 ---
 title: "Reproducible Publications with Julia and Quarto"
-subtitle: "JuliaCon 2022"
-author: J.J. Allaire
-date: July 29th, 2022
+subtitle: "J.J. Allaire (RStudio, PBC)"
+date: JuliaCon 2022 
 format: 
   revealjs:
     preview-links: true
-    footer: https://quarto.org
+    footer: <https://quarto.org>
     css: styles.css
 bibliography: references.bib
 ---
@@ -36,6 +35,14 @@ Quarto is an open-source scientific and technical publishing system that builds 
 -   Computations: Python, R, Julia, Observable JS
 -   Markdown: [Pandoc](https://pandoc.org) w/ many enhancements
 -   Output: Documents, presentations, websites, books, blogs
+
+## Origins
+
+-   Open source project sponsored by RStudio, PBC.
+-   10 years of experience with R Markdown (a similar system that was R-specific) convinced us that the core ideas were sound.
+-   The number of languages and runtimes used for scientific discourse is very broad.
+-   Quarto is a ground-up reimagining of R Markdown that is fundamentally multi-language and multi-engine.
+
 
 ## Goal: Computational Documents
 
@@ -146,7 +153,7 @@ Some useful options for code cells:
 | `layout`    | Layout multiple plots side by side.       |
 
 
-# Markdown Enhancements
+# Scientfic Markdown
 
 ## Citations {.smaller}
 
@@ -285,7 +292,7 @@ Quarto supports a variety of formats for creating presentations, including:
 - pptx — PowerPoint (MS Office)
 - beamer — Beamer (LaTeX/PDF)
 
-Revealjs presentations support many advanced features including speaker notes, animations, custom backgrounds, and printing to PDF.
+Revealjs supports many advanced features including speaker notes, animations, custom backgrounds, and printing to PDF.
 
 Example: [JunctionTrees.jl: Efficient Bayesian Inference in Discrete Graphical Models](https://mroavi.github.io/juliacon-2022)
 
@@ -335,15 +342,63 @@ Example: [Patrick Altmeyer's Blog](https://www.paltmeyer.com/blog/)
 
 ## Caching and Freeze
 
-## Tools: VS Code
+## VS Code Extension {.smaller}
 
-## Tools: Jupyter Lab
+<https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
 
-## Tools: Text Editors
+- Render command with integrated preview pane
+- Syntax highlighting for markdown and embedded languages
+- Completion for embedded languages (e.g. Python, R, Julia, LaTeX, etc.)
+- Completion and diagnostics for project files and document/cell options
+- Commands and key-bindings for running cells and selected line(s)
+- Live preview for embedded mermaid and graphviz diagrams
+- Assist panel for contextual help, image preview, and math preview
+- Code snippets for common markdown constructs
+- Code folding and document outline for navigation within documents
+- Workspace symbol provider for navigation across project files
+
+## {background-image="images/vscode-render.png" background-size="contain"}
+
+::: footer
+:::
+
+
+## {background-image="images/vscode-runcell.png" background-size="contain"}
+
+::: footer
+:::
+
+## {background-image="images/vscode-completion.png" background-size="contain"}
+
+::: footer
+:::
+
+
+## Jupyter Lab
+
+::: columns
+
+::: {.column}
+
+:::
+
+::: {.column}
+![](images/jupyterlab.png)
+:::
+
+:::
+
+
+
+## Text Editors
+
+
 
 # Under the Hood
 
+## How It Works
 
+## IJulia
 
 ## Pandoc
 
