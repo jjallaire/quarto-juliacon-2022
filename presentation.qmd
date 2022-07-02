@@ -1,0 +1,191 @@
+---
+title: "Reproducible Publications with Julia and Quarto"
+subtitle: "JuliaCon 2022"
+author: J.J. Allaire
+date: July 29th, 2022
+format: 
+  revealjs:
+    footer: https://quarto.org
+---
+
+# Overview
+
+- Quarto Basics
+
+- Scientific Markdown
+
+- Output Formats
+
+- Quarto and Julia
+
+- Under the Hood
+
+- Julia Computations
+
+
+# Quarto Basics
+
+## What is Quarto?
+
+<https://quarto.org>
+
+Quarto is an open-source scientific and technical publishing system that builds on standard markdown with features essential for scientific communication.
+
+- Computations: Python, R, Julia, Observable JS
+- Markdown: Pandoc w/ many enhancements
+- Output: Documents, presentations, websites, books, blogs
+
+## Goal: Computational Documents
+
+::: columns
+::: {.column width="60%"}
+![](images/nature-reproducibility.png)
+:::
+
+::: {.column width="40%"}
+-   Documents that incorporate the source code required for their production
+-   Notebook and plain text flavors
+-   Automation and reproducibility
+:::
+:::
+
+## Goal: Scientific Markdown
+
+![](images/scientific-markdown.png)
+
+
+## Goal: Single Source Publishing
+
+<https://coko.foundation/articles/single-source-publishing.html>
+
+
+![](images/single-source-publishing.jpg)
+
+
+## Simple Example {.smaller}
+
+Markdown document with cross references and executable code blocks:
+
+````markdown
+---
+title: "Plots Demo"
+author: "Norah Jones"
+date: "5/22/2021"
+jupyter: julia-1.7
+---
+
+## Parametric Plots
+
+Plot function pair (x(u), y(u)). See @fig-parametric for an example.
+
+```{{julia}}
+#| label: fig-parametric
+#| fig-cap: "Parametric Plot"
+#| echo: false
+
+using Plots
+plot(sin, x->sin(2x), 0, 2π, leg=false, fill=(0,:lavender))
+```
+````
+
+Can be rendered to dozens of output formats (via Pandoc):
+
+```bash
+quarto render hello.qmd --to html
+quarto render hello.qmd --to pdf
+quarto render hello.qmd --to docx
+```
+
+
+
+## Code Cells
+
+
+
+## More Examples
+
+https://juliamixedmodels.github.io/EmbraceUncertainty
+
+
+
+
+# Markdown Enhancements
+
+## Citations
+
+## Cross References
+
+## Advanced Page Layout
+
+## Figure/Layout Panels
+
+## Callouts
+
+## Diagrams
+
+
+# Output Formats
+
+## Documents
+
+## Presentations
+
+## Websites
+
+## Books
+
+## Blogs
+
+## Markdown (gfm, hugo, etc.)
+
+# Quarto and Julia
+
+## IJulia
+
+
+## Tools: VS Code
+
+## Tools: Jupyter Lab
+
+## Tools: Text Editors
+
+
+
+# Under the Hood
+
+## Pandoc 
+
+## Pandoc AST
+
+## Pandoc Filters
+
+## Lua Filters
+
+## Quarto Filters
+
+## Julia Filters
+
+
+# Julia Computations
+
+## Requirements
+
+- Convert arbitrary output (including images) to markdown
+- 
+
+## IJulia and Revise.jl
+
+
+## Other Engines?
+
+- Pluto
+- Neptune
+- Weave.jl
+
+
+
+
+
+
+
+
