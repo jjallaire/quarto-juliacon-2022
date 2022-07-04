@@ -7,6 +7,7 @@ format:
     preview-links: true
     footer: <https://quarto.org>
     css: styles.css
+    code-line-numbers: false
 bibliography: references.bib
 ---
 
@@ -20,9 +21,6 @@ bibliography: references.bib
 
 -   Quarto and Julia
 
--   Under the Hood
-
--   Julia Computations
 
 # Quarto Basics
 
@@ -35,6 +33,8 @@ Quarto is an open-source scientific and technical publishing system that builds 
 -   Computations: Python, R, Julia, Observable JS
 -   Markdown: [Pandoc](https://pandoc.org) w/ many enhancements
 -   Output: Documents, presentations, websites, books, blogs
+
+Literate programming system in the tradition of Org-mode, Sweave, Weave.jl, R Markdown, iPyPublish, Jupyter Book, etc.
 
 ## Origins
 
@@ -152,8 +152,30 @@ Some useful options for code cells:
 | `code-fold` | Fold code using HTML `<details>` tag.     |
 | `layout`    | Layout multiple plots side by side.       |
 
+## Rendering Pipeline
+
+Plain text workflow (`.qmd` => `.ipynb` then execute cells):
+
+![](images/qmd-how-it-works.png)
+
+Notebook workflow (no execution occurs by default):
+
+![](images/ipynb-how-it-works.png)
+
+
 
 # Scientfic Markdown
+
+## Brief History
+
+- Org-mode, Textile, AsciiDoc, and others pioneer plain text authoring.
+
+- Markdown created by Jon Gruber and Aaron Swartx as an easier way to compose HTML
+
+- Many flavors of Markdown emerge to build upon the core idea (MultiMarkdown, PHP Markdown Extra, GitHub Flavored Markdown, etc.)
+
+- Pandoc created by John MacFarlane with deeper commitment to scholarly writing (e.g. citations) and publishing (LaTeX)
+
 
 ## Citations {.smaller}
 
@@ -221,8 +243,6 @@ Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
     :::
     ````
 
--   Also works for code chunks that produce figures and tables: <https://quarto.org/docs/authoring/figures-and-layout.html#figures>
-
 :::
 
 ::: {.column width="5%"}
@@ -234,6 +254,9 @@ Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
 ![](images/layout-attrib-negative.png)
 :::
 :::
+
+Also works for code chunks that produce figures and tables: <https://quarto.org/docs/authoring/figures.html#computations>
+
 
 ## Callouts {.smaller}
 
@@ -307,7 +330,7 @@ Example: [JunctionTrees.jl: Efficient Bayesian Inference in Discrete Graphical M
 -   Full text search (client side or Algolia)
 
 
-Example: [Julia Workshop for Data Science](https://crsl4.github.io/julia-workshop/>)
+Example: [Julia Workshop for Data Science](https://crsl4.github.io/julia-workshop/)
 
 Example: [Quarto Website](https://quarto.org)
 
@@ -336,13 +359,132 @@ Example: [Patrick Altmeyer's Blog](https://www.paltmeyer.com/blog/)
 
 ## Prerequisites
 
-## IJulia 
+Quarto executes Julia computations using its Jupyter engine (so Jupyter itself is a prereq):
+
+```bash
+pip3 install jupyter
+```
+
+The [IJulia kernel](https://julialang.github.io/IJulia.jl/stable) is required, and [Revise.jl](https://timholy.github.io/Revise.jl) recommended:
+
+```julia
+julia> using Pkg
+julia> Pkg.add("IJulia")
+julia> Pkg.add("Revise")
+```
+
+## Basic Workflow
+
+Rendering:
+
+```bash
+# plain text qmd
+quarto render julia.qmd 
+quarto render julia.qmd --to pdf
+
+## ipynb notebook
+quarto render julia.ipynb
+quarto render julia.ipynb --to docx
+```
+
+Preview:
+
+```bash
+# plain text qmd
+quarto preview julia.qmd 
+quarto preview julia.qmd --to pdf
+
+## ipynb notebook
+quarto preview julia.ipynb
+quarto preview julia.ipynb --to docx
+```
+
+## {background-image="images/jupyterlab.png" background-size="contain"}
+
+::: footer
+:::
+
+## IJulia
+
+- The IJulia Jupyter kernel is bound automatically when `{julia}` executable cells are present. A specific version of the kernel can be bound in document options:
+
+    ```{.yaml code-line-numbers="false"}
+    jupyter: julia-1.7
+    ```
+
+- IJulia executes Julia code and transforms it to plain text, graphics, markdown, HTML, etc.
+
+- For interactive sessions, Quarto keeps the Jupyter kernel resident as a daemon to mitigate long startup time.
+
+- Revise.jl is (optionally) used to sync changes to dependent files/packages that occur while the daemon is running.
+
+## IJulia Figures
+
+- Quarto provides default figure sizes and formats (e.g. PNG vs. SVG vs. PDF) that are format dependent (e.g. HTML, PDF, MS Word, PowerPoint, etc.)
+
+- These are propagated to Julia in a setup cell that sets global defaults for some plotting packages (currently `Plots` and `CairoMakie`)
+
+- Better approach would be if Julia plotting packages could automaticaly detect when they are running in Quarto and set their defaults accordingly
+
+
+## Performance Considerations
+
+- **Startup performance** --- How long does it take to load the interpreter + packages and how often do I need to do that?
+
+- **Rendering performance** --- How expensive are my computations and how frequently do I need to run them?
+
+
+## Startup Performance
+
+- For interactive sessions, Jupyter kernels are kept alive to mitigate startup costs (`hello.qmd` example from earlier takes ~ 30 seconds on first run but less than 0.5 seconds on subsequent runs within the same session)
+
+- This is convenient but creates the problem of stale code (e.g. referenced files are changed, packages are updated, etc.). The solution to this is [Revise.jl](https://timholy.github.io/Revise.jl), a library that helps you keep your Julia sessions running longer, reducing the need to restart when you make changes to code.
 
 ## Revise.jl
 
-## Caching and Freeze
+Install Revise.jl:
 
-## VS Code Extension {.smaller}
+```julia
+julia> Pkg.add("Revise")
+```
+
+<br/>
+
+Configure to launch automatically within IJulia:
+
+`.julia/config/startup_ijulia.jl`
+
+```julia
+try
+  @eval using Revise
+catch e
+  @warn "Revise init" exception=(e, catch_backtrace())
+end
+```
+
+
+
+## Rendering Performance
+
+1. Authoring in `.ipynb` enables you to control exactly when code execution occurs (and cache the results in the the notebook)
+
+2. [Jupyter Cache](https://jupyter-cache.readthedocs.io/en/latest/) provides trainsient caching of cell outputs for a document (if any of the cells in the document change then all of the cells will be re-executed).
+
+3. Quarto's [Freeze](https://quarto.org/docs/projects/code-execution.html#freeze) feature enables you to permanently save and re-use computational outputs.
+
+
+## Why IJulia?
+
+- Aligned with architectual investments we had already made for Jupyter (e.g. kernel daemoninzation, execution result caching)
+
+- `IJulia.display` function provides support for MIME outputs from Julia results (including raw LaTeX/HTML)
+
+- Ability to author in various popular notebook front ends (JupyterLab, VS Code, etc.)
+
+Other literate programming systems (Pluto, Neptune, etc.) could certainly be integrated as an alternative to IJulia. 
+
+
+## Tools: VS Code {.smaller}
 
 <https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
 
@@ -374,55 +516,41 @@ Example: [Patrick Altmeyer's Blog](https://www.paltmeyer.com/blog/)
 :::
 
 
-## Jupyter Lab
+## Tools: Jupyter Lab
 
-::: columns
 
-::: {.column}
-
-:::
-
-::: {.column}
-![](images/jupyterlab.png)
-:::
-
-:::
+![](images/jupyterlab.png){.border}
 
 
 
-## Text Editors
+## Tools: Text Editors
 
+- Use `quarto preview` with any text editor:
 
+  ```{.bash code-line-numbers="false"}
+  $ quarto preview julia.qmd
+  ```
+ 
+  Live reloading for documents and websites/books.
 
-# Under the Hood
+- Quarto modes/extensions for various editors:
 
-## How It Works
+  - Emacs: <https://github.com/quarto-dev/quarto-emacs>
+  - Vim: <https://github.com/quarto-dev/quarto-vim>
+  - Neovim: <https://github.com/jmbuhr/quarto-nvim>
 
-## IJulia
+## Thank You!
 
-## Pandoc
+- Learning More
 
-## Pandoc AST
+    - Getting Started: <https://quarto.org/docs/get-started/>
 
-## Pandoc Filters
+    - Quarto and Julia: <https://quarto.org/docs/computations/julia.html>
 
-## Lua Filters
+    - About the Project:  <https://quarto.org/about.html>
 
-## Quarto Filters
+- Talk to us at <https://github.com/quarto-dev/quarto-cli/discussions>
 
-## Julia Filters
+- Questions?
 
-# Julia Computations
-
-## Requirements
-
--   Convert arbitrary output (including images) to markdown
--   
-
-## IJulia and Revise.jl
-
-## Other Engines?
-
--   Pluto
--   Neptune
--   Weave.jl
+    
