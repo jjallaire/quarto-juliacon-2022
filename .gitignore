@@ -5,3 +5,5 @@
 *.pptx
 *_files/
 .Rproj.user
+.Rhistory
+.ipynb_checkpoints
