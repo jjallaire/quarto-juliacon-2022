@@ -8,6 +8,7 @@ format:
     footer: <https://quarto.org>
     css: styles.css
     code-line-numbers: false
+    mermaid-format: png
 bibliography: references.bib
 ---
 
@@ -20,7 +21,6 @@ bibliography: references.bib
 -   Output Formats
 
 -   Quarto and Julia
-
 
 # Quarto Basics
 
@@ -41,8 +41,7 @@ Literate programming system in the tradition of Org-mode, Sweave, Weave.jl, R Ma
 -   Open source project sponsored by RStudio, PBC.
 -   10 years of experience with R Markdown (a similar system that was R-specific) convinced us that the core ideas were sound.
 -   The number of languages and runtimes used for scientific discourse is very broad.
--   Quarto is a ground-up reimagining of R Markdown that is fundamentally multi-language and multi-engine.
-
+-   Quarto is a ground-up re-imagining of R Markdown that is fundamentally multi-language and multi-engine.
 
 ## Goal: Computational Documents
 
@@ -154,7 +153,7 @@ Some useful options for code cells:
 
 ## Rendering Pipeline
 
-Plain text workflow (`.qmd` => `.ipynb` then execute cells):
+Plain text workflow (`.qmd` =\> `.ipynb` then execute cells):
 
 ![](images/qmd-how-it-works.png)
 
@@ -162,49 +161,45 @@ Notebook workflow (no execution occurs by default):
 
 ![](images/ipynb-how-it-works.png)
 
-
-
-# Scientfic Markdown
+# Scientific Markdown
 
 ## Brief History
 
-- Org-mode, Textile, AsciiDoc, and others pioneer plain text authoring.
+-   Org-mode, Textile, AsciiDoc, and others pioneer plain text authoring.
 
-- Markdown created by Jon Gruber and Aaron Swartx as an easier way to compose HTML
+-   Markdown created by Jon Gruber and Aaron Swartz as an easier way to compose HTML
 
-- Many flavors of Markdown emerge to build upon the core idea (MultiMarkdown, PHP Markdown Extra, GitHub Flavored Markdown, etc.)
+-   Many flavors of Markdown emerge to build upon the core idea (MultiMarkdown, PHP Markdown Extra, GitHub Flavored Markdown, etc.)
 
-- Pandoc created by John MacFarlane with deeper commitment to scholarly writing (e.g. citations) and publishing (LaTeX)
-
+-   Pandoc created by John MacFarlane with deeper commitment to scholarly writing (e.g. citations) and publishing (LaTeX)
 
 ## Citations {.smaller}
 
 Pandoc includes robust support for citations and bibliographies in a wide variety of formats including [BibTeX](http://www.bibtex.org/), [CSL](https://citationstyles.org/), and [RIS](https://en.wikipedia.org/wiki/RIS_(file_format)).
 
-+-------------------------------------------+---------------------------------------------------------------------+
-| Markdown Syntax                           | Output                                                              |
-+===========================================+=====================================================================+
-|     Blah Blah [see @knuth1984, pp. 33-35; | Blah Blah [see @knuth1984, pp. 33-35; also @wickham2015, chap. 1]   |
-|     also @wickham2015, chap. 1]           |                                                                     |
-+-------------------------------------------+---------------------------------------------------------------------+
-|     Blah Blah [@knuth1984, pp. 33-35,     | Blah Blah [@knuth1984, pp. 33-35, 38-39 and passim]                 |
-|     38-39 and passim]                     |                                                                     |
-+-------------------------------------------+---------------------------------------------------------------------+
-|     Blah Blah [@wickham2015; @knuth1984]. | Blah Blah [@wickham2015; @knuth1984].                               |
-+-------------------------------------------+---------------------------------------------------------------------+
-|     Wickham says blah [-@wickham2015]     | Wickham says blah [-@wickham2015]                                   |
-+-------------------------------------------+---------------------------------------------------------------------+
++-------------------------------------------+-------------------------------------------------------------------+
+| Markdown Syntax                           | Output                                                            |
++===========================================+===================================================================+
+|     Blah Blah [see @knuth1984, pp. 33-35; | Blah Blah [see @knuth1984, pp. 33-35; also @wickham2015, chap. 1] |
+|     also @wickham2015, chap. 1]           |                                                                   |
++-------------------------------------------+-------------------------------------------------------------------+
+|     Blah Blah [@knuth1984, pp. 33-35,     | Blah Blah [@knuth1984, pp. 33-35, 38-39 and passim]               |
+|     38-39 and passim]                     |                                                                   |
++-------------------------------------------+-------------------------------------------------------------------+
+|     Blah Blah [@wickham2015; @knuth1984]. | Blah Blah [@wickham2015; @knuth1984].                             |
++-------------------------------------------+-------------------------------------------------------------------+
+|     Wickham says blah [-@wickham2015]     | Wickham says blah [-@wickham2015]                                 |
++-------------------------------------------+-------------------------------------------------------------------+
 
 More than [10,000 citation output styles](https://www.zotero.org/styles) supported via CSL (Citation Style Language):
 
-```yaml
+``` yaml
 ---
 title: "My ARticle"
 bibliography: references.bib
 csl: nature.csl
 ---
 ```
-
 
 ## Cross References {.smaller}
 
@@ -216,16 +211,13 @@ Markdown: <https://quarto.org/docs/authoring/cross-references.html#subfigures>
 
 Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
 
-
 ## Figure/Layout Panels {.smaller}
 
 ::: columns
-
 ::: {.column width="47%"}
-
 -   Arbitrary layout of figures and tables:
 
-    ```{.markdown}
+    ``` markdown
     ::: {layout="[[40,-20,40], [100]]"}
     ![Surus](surus.png)
     ![Hanno](hanno.png)
@@ -235,28 +227,24 @@ Julia cell: <https://quarto.org/docs/computations/julia.html#code-blocks>
 
 -   Shorthand syntax (`layout-ncol` or `layout-nrow`) available for simple cases:
 
-    ````markdown
+    ``` markdown
     ::: {layout-ncol="2"}
     Block 1
 
     Block 2
     :::
-    ````
-
+    ```
 :::
 
 ::: {.column width="5%"}
 :::
 
 ::: {.column width="48%"}
-
-
 ![](images/layout-attrib-negative.png)
 :::
 :::
 
 Also works for code chunks that produce figures and tables: <https://quarto.org/docs/authoring/figures.html#computations>
-
 
 ## Callouts {.smaller}
 
@@ -276,7 +264,7 @@ Docs: <https://quarto.org/docs/authoring/article-layout.html>
 
 ## Diagrams
 
-Quarto has native support for embedding [Mermaid](https://mermaid-js.github.io/mermaid/#/) and [Graphviz](https://graphviz.org/) diagrams. 
+Quarto has native support for embedding [Mermaid](https://mermaid-js.github.io/mermaid/#/) and [Graphviz](https://graphviz.org/) diagrams.
 
 ```{mermaid}
 %%| echo: fenced
@@ -287,33 +275,31 @@ flowchart LR
   C --> E[Result two]
 ```
 
-
-
 # Output Formats
 
 ## Documents {.smaller}
 
 Pandoc supports a huge array of output formats, all of which can be used with Quarto.
 
-- HTML
-- PDF
-- MS Word
-- Open Office
-- JATS (Journal Article Tag Suite)
-- ConTeXt
-- RTF
-- AsciiDoc
-- Markdown (gfm, hugo, etc.)
+-   HTML
+-   PDF
+-   MS Word
+-   Open Office
+-   JATS (Journal Article Tag Suite)
+-   ConTeXt
+-   RTF
+-   AsciiDoc
+-   Markdown (gfm, hugo, etc.)
 
-Example: [GitHub Langauges Analysis (PDF)](https://github.com/AlissonRP/gh_langs/raw/slides/report.pdf)
+Example: [GitHub Languages Analysis (PDF)](https://github.com/AlissonRP/gh_langs/raw/slides/report.pdf)
 
 ## Presentations
 
 Quarto supports a variety of formats for creating presentations, including:
 
-- revealjs — reveal.js (HTML)
-- pptx — PowerPoint (MS Office)
-- beamer — Beamer (LaTeX/PDF)
+-   revealjs --- reveal.js (HTML)
+-   pptx --- PowerPoint (MS Office)
+-   beamer --- Beamer (LaTeX/PDF)
 
 Revealjs supports many advanced features including speaker notes, animations, custom backgrounds, and printing to PDF.
 
@@ -321,14 +307,13 @@ Example: [JunctionTrees.jl: Efficient Bayesian Inference in Discrete Graphical M
 
 ## Websites
 
--   Convenient way to publish groups of documents. 
+-   Convenient way to publish groups of documents.
 
 -   Arbitrary content depth / organization
 
 -   Multi-level navigation (navbar / sidebar / hybrid)
 
 -   Full text search (client side or Algolia)
-
 
 Example: [Julia Workshop for Data Science](https://crsl4.github.io/julia-workshop/)
 
@@ -354,20 +339,19 @@ Example: [Embrace Uncertainty: Mixed-effects models with Julia](https://juliamix
 
 Example: [Patrick Altmeyer's Blog](https://www.paltmeyer.com/blog/)
 
-
 # Quarto and Julia
 
 ## Prerequisites
 
 Quarto executes Julia computations using its Jupyter engine (so Jupyter itself is a prereq):
 
-```bash
+``` bash
 pip3 install jupyter
 ```
 
 The [IJulia kernel](https://julialang.github.io/IJulia.jl/stable) is required, and [Revise.jl](https://timholy.github.io/Revise.jl) recommended:
 
-```julia
+``` julia
 julia> using Pkg
 julia> Pkg.add("IJulia")
 julia> Pkg.add("Revise")
@@ -377,7 +361,7 @@ julia> Pkg.add("Revise")
 
 Rendering:
 
-```bash
+``` bash
 # plain text qmd
 quarto render julia.qmd 
 quarto render julia.qmd --to pdf
@@ -389,7 +373,7 @@ quarto render julia.ipynb --to docx
 
 Preview:
 
-```bash
+``` bash
 # plain text qmd
 quarto preview julia.qmd 
 quarto preview julia.qmd --to pdf
@@ -399,52 +383,50 @@ quarto preview julia.ipynb
 quarto preview julia.ipynb --to docx
 ```
 
-## {background-image="images/jupyterlab.png" background-size="contain"}
+##  {background-image="images/jupyterlab.png" background-size="contain"}
 
 ::: footer
 :::
 
 ## IJulia
 
-- The IJulia Jupyter kernel is bound automatically when `{julia}` executable cells are present. A specific version of the kernel can be bound in document options:
+-   The IJulia Jupyter kernel is bound automatically when `{julia}` executable cells are present. A specific version of the kernel can be bound in document options:
 
-    ```{.yaml code-line-numbers="false"}
+    ``` {.yaml code-line-numbers="false"}
     jupyter: julia-1.7
     ```
 
-- IJulia executes Julia code and transforms it to plain text, graphics, markdown, HTML, etc.
+-   IJulia executes Julia code and transforms it to plain text, graphics, markdown, HTML, etc.
 
-- For interactive sessions, Quarto keeps the Jupyter kernel resident as a daemon to mitigate long startup time.
+-   For interactive sessions, Quarto keeps the Jupyter kernel resident as a daemon to mitigate long startup time.
 
-- Revise.jl is (optionally) used to sync changes to dependent files/packages that occur while the daemon is running.
+-   Revise.jl is (optionally) used to sync changes to dependent files/packages that occur while the daemon is running.
 
 ## IJulia Figures
 
-- Quarto provides default figure sizes and formats (e.g. PNG vs. SVG vs. PDF) that are format dependent (e.g. HTML, PDF, MS Word, PowerPoint, etc.)
+-   Quarto provides default figure sizes and formats (e.g. PNG vs. SVG vs. PDF) that are format dependent (e.g. HTML, PDF, MS Word, PowerPoint, etc.)
 
-- These are propagated to Julia in a setup cell that sets global defaults for some plotting packages (currently `Plots` and `CairoMakie`)
+-   These are propagated to Julia in a setup cell that sets global defaults for some plotting packages (currently `Plots` and `CairoMakie`)
 
-- Better approach would be if Julia plotting packages could automaticaly detect when they are running in Quarto and set their defaults accordingly
-
+-   Better approach would be if Julia plotting packages could automatically detect when they are running in Quarto and set their defaults accordingly
 
 ## Performance Considerations
 
-- **Startup performance** --- How long does it take to load the interpreter + packages and how often do I need to do that?
+-   **Startup performance** --- How long does it take to load the interpreter + packages and how often do I need to do that?
 
-- **Rendering performance** --- How expensive are my computations and how frequently do I need to run them?
-
+-   **Rendering performance** --- How expensive are my computations and how frequently do I need to run them?
 
 ## Startup Performance
 
-- For interactive sessions, Jupyter kernels are kept alive to mitigate startup costs (`hello.qmd` example from earlier takes ~ 30 seconds on first run but less than 0.5 seconds on subsequent runs within the same session)
+-   For interactive sessions, Jupyter kernels are kept alive to mitigate startup costs (`hello.qmd` example from earlier takes \~ 30 seconds on first run but less than 0.5 seconds on subsequent runs within the same session)
 
-- This is convenient but creates the problem of stale code (e.g. referenced files are changed, packages are updated, etc.). The solution to this is [Revise.jl](https://timholy.github.io/Revise.jl), a library that helps you keep your Julia sessions running longer, reducing the need to restart when you make changes to code.
+-   This is convenient but creates the problem of stale code (e.g. referenced files are changed, packages are updated, etc.). The solution to this is [Revise.jl](https://timholy.github.io/Revise.jl), a library that helps you keep your Julia sessions running longer, reducing the need to restart when you make changes to code.
 
 ## Revise.jl
 
 Install Revise.jl:
 
-```julia
+``` julia
 julia> Pkg.add("Revise")
 ```
 
@@ -454,7 +436,7 @@ Configure to launch automatically within IJulia:
 
 `.julia/config/startup_ijulia.jl`
 
-```julia
+``` julia
 try
   @eval using Revise
 catch e
@@ -462,95 +444,84 @@ catch e
 end
 ```
 
-
-
 ## Rendering Performance
 
-1. Authoring in `.ipynb` enables you to control exactly when code execution occurs (and cache the results in the the notebook)
+1.  Authoring in `.ipynb` enables you to control exactly when code execution occurs (and cache the results in the the notebook)
 
-2. [Jupyter Cache](https://jupyter-cache.readthedocs.io/en/latest/) provides trainsient caching of cell outputs for a document (if any of the cells in the document change then all of the cells will be re-executed).
+2.  [Jupyter Cache](https://jupyter-cache.readthedocs.io/en/latest/) provides transient caching of cell outputs for a document (if any of the cells in the document change then all of the cells will be re-executed).
 
-3. Quarto's [Freeze](https://quarto.org/docs/projects/code-execution.html#freeze) feature enables you to permanently save and re-use computational outputs.
-
+3.  Quarto's [Freeze](https://quarto.org/docs/projects/code-execution.html#freeze) feature enables you to permanently save and re-use computational outputs.
 
 ## Why IJulia?
 
-- Aligned with architectual investments we had already made for Jupyter (e.g. kernel daemoninzation, execution result caching)
+-   Aligned with architectural investments we had already made for Jupyter (e.g. kernel daemonization, execution result caching)
 
-- `IJulia.display` function provides support for MIME outputs from Julia results (including raw LaTeX/HTML)
+-   `IJulia.display` function provides support for MIME outputs from Julia results (including raw LaTeX/HTML)
 
-- Ability to author in various popular notebook front ends (JupyterLab, VS Code, etc.)
+-   Ability to author in various popular notebook front ends (JupyterLab, VS Code, etc.)
 
-Other literate programming systems (Pluto, Neptune, etc.) could certainly be integrated as an alternative to IJulia. 
-
+Other literate programming systems (Pluto, Neptune, etc.) could certainly be integrated as an alternative to IJulia.
 
 ## Tools: VS Code {.smaller}
 
 <https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
 
-- Render command with integrated preview pane
-- Syntax highlighting for markdown and embedded languages
-- Completion for embedded languages (e.g. Python, R, Julia, LaTeX, etc.)
-- Completion and diagnostics for project files and document/cell options
-- Commands and key-bindings for running cells and selected line(s)
-- Live preview for embedded mermaid and graphviz diagrams
-- Assist panel for contextual help, image preview, and math preview
-- Code snippets for common markdown constructs
-- Code folding and document outline for navigation within documents
-- Workspace symbol provider for navigation across project files
+-   Render command with integrated preview pane
+-   Syntax highlighting for markdown and embedded languages
+-   Completion for embedded languages (e.g. Python, R, Julia, LaTeX, etc.)
+-   Completion and diagnostics for project files and document/cell options
+-   Commands and key-bindings for running cells and selected line(s)
+-   Live preview for embedded mermaid and graphviz diagrams
+-   Assist panel for contextual help, image preview, and math preview
+-   Code snippets for common markdown constructs
+-   Code folding and document outline for navigation within documents
+-   Workspace symbol provider for navigation across project files
 
-## {background-image="images/vscode-render.png" background-size="contain"}
-
-::: footer
-:::
-
-
-## {background-image="images/vscode-runcell.png" background-size="contain"}
+##  {background-image="images/vscode-render.png" background-size="contain"}
 
 ::: footer
 :::
 
-## {background-image="images/vscode-completion.png" background-size="contain"}
+##  {background-image="images/vscode-runcell.png" background-size="contain"}
 
 ::: footer
 :::
 
+##  {background-image="images/vscode-completion.png" background-size="contain"}
+
+::: footer
+:::
 
 ## Tools: Jupyter Lab
 
-
 ![](images/jupyterlab.png){.border}
-
-
 
 ## Tools: Text Editors
 
-- Use `quarto preview` with any text editor:
+-   Use `quarto preview` with any text editor:
 
-  ```{.bash code-line-numbers="false"}
-  $ quarto preview julia.qmd
-  ```
- 
-  Live reloading for documents and websites/books.
+    ``` {.bash code-line-numbers="false"}
+    $ quarto preview julia.qmd
+    ```
 
-- Quarto modes/extensions for various editors:
+    Live reloading for documents and websites/books.
 
-  - Emacs: <https://github.com/quarto-dev/quarto-emacs>
-  - Vim: <https://github.com/quarto-dev/quarto-vim>
-  - Neovim: <https://github.com/jmbuhr/quarto-nvim>
+-   Quarto modes/extensions for various editors:
+
+    -   Emacs: <https://github.com/quarto-dev/quarto-emacs>
+    -   Vim: <https://github.com/quarto-dev/quarto-vim>
+    -   Neovim: <https://github.com/jmbuhr/quarto-nvim>
 
 ## Thank You!
 
-- Learning More
+-   Learning More
 
-    - Getting Started: <https://quarto.org/docs/get-started/>
+    -   Getting Started: <https://quarto.org/docs/get-started/>
 
-    - Quarto and Julia: <https://quarto.org/docs/computations/julia.html>
+    -   Quarto and Julia: <https://quarto.org/docs/computations/julia.html>
 
-    - About the Project:  <https://quarto.org/about.html>
+    -   About the Project: <https://quarto.org/about.html>
 
-- Talk to us at <https://github.com/quarto-dev/quarto-cli/discussions>
+-   Talk to us at <https://github.com/quarto-dev/quarto-cli/discussions>
 
-- Questions?
-
-    
+-   Questions?
