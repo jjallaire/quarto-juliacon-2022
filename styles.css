@@ -1,0 +1,11 @@
+.border {
+  border: 1px solid #dee2e6;
+}
+
+.reveal table {
+  margin: initial;
+}
+
+#refs {
+  display: none;
+}
