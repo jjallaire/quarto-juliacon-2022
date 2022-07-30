@@ -1,4 +1,4 @@
-- source: presentation.qmd
+- source: quarto-juliacon-2022.qmd
   quarto-pub:
     - id: b5ee2a65-13c4-4070-9dfc-64d3cf30dc50
       url: 'https://quartopub.org/sites/jjallaire/reproducible-publications-with-julia-and-quarto'
