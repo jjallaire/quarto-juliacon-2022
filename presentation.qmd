@@ -4,7 +4,7 @@ subtitle: "J.J. Allaire (RStudio, PBC)"
 date: JuliaCon 2022 
 format: 
   revealjs:
-    preview-links: true
+    
     footer: <https://quarto.org>
     css: styles.css
     code-line-numbers: false
